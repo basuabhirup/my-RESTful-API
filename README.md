@@ -10,4 +10,4 @@ This project is a part of "The Complete 2021 Web Development Bootcamp" by The Lo
 
 ## Steps I have followed
 1. Used mongod command from a terminal to start a local database server from localhost:27017
-2. Used mongosh command from another shell to run access to the local database from MongoDB shell.
+2. Used mongosh command from another shell to access to the local database with MongoDB shell.
