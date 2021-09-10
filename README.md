@@ -13,4 +13,65 @@ This project is a part of "The Complete 2021 Web Development Bootcamp" by The Lo
 2. Used `mongosh` command from another terminal to access to the local database with MongoDB shell.
 3. Created a sample database named WikiDB, using the command `use WikiDB`
 4. Created a collection named 'articles' with 4 sample documents, using the command `db.articles.insertMany({})`
-5. Created a dedicated directory for the project and inside that directory initialised NPM using `npm init -y` command.
+5. Created a dedicated directory for the project and inside that directory initialised NPM using `npm init -y` command from another terminal.
+6. Used `npm install express body-parser ejs mongoose` command to install all the required dependencies for the project. 
+7. Started the server with the following boiler plate codebase:
+```javascript
+// Requiring necessary NPM modules:
+const express = require("express");
+const bodyParser = require("body-parser");
+const ejs = require("ejs");
+const mongoose = require('mongoose');
+
+// Set port for deployement as well as localhost:
+const port = process.env.PORT || 3000;
+
+// Initial Setup for the App:
+const app = express();
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
+
+// Connect to a new MongoDB Database, using Mongoose ODM:
+mongoose.connect('mongodb://localhost:27017/testDB');
+
+// Create a new collection to store the items:
+const itemSchema = new mongoose.Schema ({ //replace 'item' with your Model name
+	name: {
+    type: String,
+    required: true
+  },
+	rating: {
+		type: Number,
+		min: 1,
+		max: 10
+	},
+	review: String
+})
+const Item = mongoose.model('Item', itemSchema); //modelName must be in singular
+
+
+// Handle HTTP Requests
+
+
+// Enable client to listen to the appropriate port:
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});
+```
+    
+8. Modified the server code to connect to our WikiDB database and the articles collection inside it:
+```javascript
+// Connect to a new MongoDB Database, using Mongoose ODM:
+mongoose.connect('mongodb://localhost:27017/wikiDB');
+
+// Create a new collection to store the articles:
+const articleSchema = new mongoose.Schema ({
+	title: {
+    type: String,
+    required: true
+  },
+	content: String
+})
+const Article = mongoose.model('Article', articleSchema);
+```
