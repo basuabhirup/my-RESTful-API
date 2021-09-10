@@ -9,5 +9,8 @@ This project is a part of "The Complete 2021 Web Development Bootcamp" by The Lo
 - There is no front end interface of this project
 
 ## Steps I have followed
-1. Used mongod command from a terminal to start a local database server from localhost:27017
-2. Used mongosh command from another shell to access to the local database with MongoDB shell.
+1. Used `mongod` command from a terminal to start a local database server from localhost:27017
+2. Used `mongosh` command from another terminal to access to the local database with MongoDB shell.
+3. Created a sample database named WikiDB, using the command `use WikiDB`
+4. Created a collection named 'articles' with 4 sample documents, using the command `db.articles.insertMany({})`
+5. Created a dedicated directory for the project and inside that directory initialised NPM using `npm init -y` command.
