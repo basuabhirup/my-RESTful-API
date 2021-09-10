@@ -33,22 +33,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 // Connect to a new MongoDB Database, using Mongoose ODM:
-mongoose.connect('mongodb://localhost:27017/testDB');
 
 // Create a new collection to store the items:
-const itemSchema = new mongoose.Schema ({ //replace 'item' with your Model name
-	name: {
-    type: String,
-    required: true
-  },
-	rating: {
-		type: Number,
-		min: 1,
-		max: 10
-	},
-	review: String
-})
-const Item = mongoose.model('Item', itemSchema); //modelName must be in singular
 
 
 // Handle HTTP Requests
