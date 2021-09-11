@@ -44,8 +44,8 @@ app.use(express.static("public"));
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
-```
-    
+```          
+                 
 8. Modified the server code to connect to our WikiDB database and the articles collection inside it:
 ```javascript
 // Connect to a new MongoDB Database, using Mongoose ODM:
@@ -60,4 +60,39 @@ const articleSchema = new mongoose.Schema ({
 	content: String
 })
 const Article = mongoose.model('Article', articleSchema);
+```    
+
+9. Handled HTTP `GET`, `POST` and `DELETE` requests made on the `/articles` route:
+```javascript
+app.route('/articles')
+	.get( (req, res) => {
+    Article.find({}, (err, articles) => {
+  		if(!err) {
+  			res.send(articles);
+  		} else {
+        res.send(err);
+      }
+  	})
+	})
+	.post( (req, res) => {
+    const title = req.body.title;
+    const content = req.body.content;
+    const article = new Article({title, content});
+    article.save(err => {
+      if(!err) {
+        res.send("Successfully added a new article.");
+      } else {
+        res.send(err);
+      }
+    })
+	})
+	.delete( (req, res) => {
+    Article.deleteMany({}, err => {
+      if(err) {
+        res.send(err);
+      } else {
+        res.send("Successfully deleted all articles");
+      }
+    })
+	});
 ```
