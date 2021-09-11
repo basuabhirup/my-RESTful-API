@@ -95,4 +95,57 @@ app.route('/articles')
       }
     })
 	});
+```    
+
+10. Handled HTTP `GET`, `PUT`, `PATCH` and `DELETE` requests made on the `/articles/:customURL` route:
+```javascript
+app.route('/articles/:customURL')
+  .get( (req,res) => {
+    Article.findOne({ title: req.params.customURL }, (err, article) => {
+      if(!err) {
+        if(article) {
+    			res.send(article);
+    		} else {
+          res.send("No record found");
+        }
+      } else {
+        res.send(err);
+      }
+  	})
+  })
+  .put((req, res) => {
+    Article.replaceOne(
+      {title: req.params.customURL},
+      {title: req.body.title, content: req.body.content},
+      (err) => {
+        if(!err) {
+          res.send("Successfully replaced the selected article.")
+        } else {
+          res.send(err);
+        }
+      }
+    )
+  })
+  .patch((req, res) => {
+    Article.updateOne(
+      {title: req.params.customURL},
+      req.body,
+      (err, result) => {
+        if(!err) {
+          res.send("Successfully updated the selected article.")
+        } else {
+          res.send(err);
+        }
+      }
+    )
+  })
+  .delete( (req, res) => {
+    Article.deleteOne({title: req.params.customURL}, err => {
+      if(err) {
+        res.send(err);
+      } else {
+        res.send("Successfully deleted the selected article");
+      }
+    })
+	});
 ```
